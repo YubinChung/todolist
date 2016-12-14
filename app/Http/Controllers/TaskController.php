@@ -38,7 +38,6 @@ class TaskController extends Controller
 		//$task->user()->associate($user->id);
 		$task->save();
 		$project->save();
-		
 
 		return redirect('/task', $data)->with('message', $task->tname." has been created");
     }
