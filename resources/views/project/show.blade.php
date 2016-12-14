@@ -29,7 +29,7 @@ Project Edit
 
 			<div>
 			<a href="{{route('project.index')}}" type="submit" class="btn btn-primary">Project List</a>
-			<a href="#" type="submit" class="btn btn-primary pull-right">Task List</a>
+			<a href="{{route('task.index')}}" type="submit" class="btn btn-primary pull-right">Task List</a>
 			</div>
 		</div>
 	</div>

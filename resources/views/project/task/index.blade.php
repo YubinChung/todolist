@@ -15,15 +15,18 @@ Task List
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<td>Project Name</td>
 					<td>Name</td>
 					<td>Description</td>
 					<td>Create</td>
 				</tr>
 			</thead>
 			<tbody>
+				
 				@foreach($tasks as $task)
+				
 				<tr>
-					
+					<td>{{-- $project -> name --}}</td>
 					<td><a href="{{ route('task.show', $task->id) }}">{{ $task-> name }}</a></td>
 					<td>{{ $task -> description }}</td>
 					<td>{{ $task -> due_date }}</td>
@@ -37,6 +40,7 @@ Task List
 					</td>
 				</tr>
 				@endforeach
+				
 			</tbody>
 		</table>
 	</div>

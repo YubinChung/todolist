@@ -12,8 +12,8 @@ class TaskController extends Controller
     public function index()
     {
         $user = \Auth::user();
-		$data['projects'] = Project::where('user_id', $user->id)->get();
-		$data['tasks'] = Task::where('project_id', $user->id)->get();
+		$data['projects'] = Project::where('user_id','=', $user->id)->get();
+		$data['tasks'] = Task::where('project_id','=','4')->get();
 		
 		return view('project.task.index', $data);
     }
@@ -31,12 +31,17 @@ class TaskController extends Controller
         //dd($request->all());
 		
 		$user = \Auth::user();
+		$project = Project::where('id')->get();
 
 		$task = new Task();
+		//$project = new Project();
+		
 		$task->name = $request->tname;
 		$task->description = $request-> description;
-		$task->project_id = $user->id;
+		$task->project_id = $request-> pname;
 		$task->due_date = $request -> duedate_at;
+		
+		//$project-> save();
 		$task->save();
 
 		return redirect('/task')->with('message', $task-> name." has been created");
