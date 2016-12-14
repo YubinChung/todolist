@@ -31,18 +31,13 @@ class TaskController extends Controller
         //dd($request->all());
 		
 		$user = \Auth::user();
-		// $value = $request->pname;
-		// $data['projects'] = Project::where('user_id', $user->id)->get();
+
 		$task = new Task();
-		$project = new Project();
-		
 		$task->name = $request->tname;
 		$task->description = $request-> description;
 		$task->project_id = $user->id;
 		$task->due_date = $request -> duedate_at;
-		// $task->user()->associate($user->id);
 		$task->save();
-		$project->save();
 
 		return redirect('/task')->with('message', $task-> name." has been created");
     }
