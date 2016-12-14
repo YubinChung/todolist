@@ -23,10 +23,10 @@ Task List
 			<tbody>
 				@foreach($tasks as $task)
 				<tr>
-					<td>{{-- $project -> id --}}</td>
-					<td><a href="{{--route('project.task.show', $task->id)--}}">{{ $task -> tname }}</a></td>
+					
+					<td><a href="{{ route('task.show', $task->id) }}">{{ $task-> name }}</a></td>
 					<td>{{ $task -> description }}</td>
-					<td>{{ $task -> created_at }}</td>
+					<td>{{ $task -> due_date }}</td>
 					<td><a href="{{--route('project.task.edit', $task->id)--}}" class="btn btn-info">Edit</a></td>
 					<td>
 						<form rule="form" method="post" action="{{-- route('project.task.destroy', $task->id )--}}" class="form-horizontal">

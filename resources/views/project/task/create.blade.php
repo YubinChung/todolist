@@ -12,8 +12,8 @@ Task Create
 			<div class="form-group">
 				<label for="Task project">project Name</label>
 				<div>
-					<select class="form-control" name="pname">
-					<option disabled selected>-- select --</option>
+					<select class="form-control" name="pname" id="pname">
+						<option disabled selected>-- select --</option>
 						@foreach($projects as $select_project)
 						<option value="{{ $select_project -> id }}">{{ $select_project -> name }}</option>
 						@endforeach
@@ -29,6 +29,10 @@ Task Create
 				<div>
 					<textarea name="description" id="description" class="form-control">{{old('description')}}</textarea>
 				</div>
+			</div>
+			<div class="form-group">
+				<label for="Duedate">Due date</label>
+				<div><input type="date" class="form-control" id="duedate_at" name="duedate_at" value=""></div>
 			</div>
 			<div class="form-group">
 				<label for="Created">Created</label>
