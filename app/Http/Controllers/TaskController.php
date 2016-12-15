@@ -6,16 +6,17 @@ use Illuminate\Http\Request;
 use App\Project;
 use App\Task;
 use App\User;
+use DB;
 
 class TaskController extends Controller
 {
     public function index()
     {
         $user = \Auth::user();
+		// have to edit
 		$data['projects'] = Project::where('user_id','=', $user->id)->get();
 		$data['tasks'] = Task::where('project_id','=','4')->get();
-		
-		return view('project.task.index', $data);
+		return view('project.task.index', $data, $tasks);
     }
 	public function create()
     {
