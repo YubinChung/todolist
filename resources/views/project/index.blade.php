@@ -1,34 +1,35 @@
-@extends('layouts.app')
 
-@section('title')
-Project List
-@endsection
+<div class="col-sm-9">
+<div class="panel panel-default">
+	<div class="panel-heading"><h2>My Project</h2></div>
+	
 
-@section('content')
-<div class="container">
-	<div class="col-md-12">
-		<p><a href="{{ route('project.create')}}" class="btn btn-success">Create</a></p>
-		@if(Session::has('message'))
-			<div class="alert alert-info">{{ Session::get('message') }}</div>
-		@endif
-		
+	@if(Session::has('message'))
+		<div class="alert alert-info">{{ Session::get('message') }}</div>
+	@endif
+
+	<div class="panel-body">
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<td>No.</td>
 					<td>Name</td>
 					<td>Description</td>
 					<td>Create</td>
+					<td>Actions</td>
 				</tr>
 			</thead>
 			<tbody>
-				@foreach($projects as $project)
+				<?php $no=1; ?>
+
+				@foreach($project as $prj)
 				<tr>
-					<td><a href="{{route('project.show', $project->id)}}">{{ $project -> name }}</a></td>
-					<td>{{ $project -> description }}</td>
-					<td>{{ $project -> created_at }}</td>
-					<td><a href="{{route('project.edit', $project->id)}}" class="btn btn-info">Edit</a></td>
-					<td>
-						<form rule="form" method="post" action="{{ route('project.destroy', $project->id )}}" class="form-horizontal">
+					<td>{{$no++}}</td>
+					<td><a href="{{--route('project.show', $prj->id) --}}">{{ $prj -> name }}</a></td>
+					<td>{{ $prj -> description }}</td>
+					<td>{{ $prj -> created_at }}</td>
+					<td><a data-link="{{--route('pEdit') --}}" class="btn btn-info">Edit</a><br>
+						<form rule="form" method="post" action="{{-- route('project.destroy', $prj->id )--}}" class="form-horizontal">
 							{{ method_field("DELETE") }}
 							{{csrf_field()}}
 							<button type="submit" class="btn btn-danger">Delete</button>
@@ -40,5 +41,8 @@ Project List
 		</table>
 	</div>
 </div>
+</div>
+<!-- Scripts -->
+    <script src="/js/app.js"></script>
 
-@endsection
+

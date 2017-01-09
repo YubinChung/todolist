@@ -5,7 +5,11 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+let util = require('./util/config')
+util.ajaxConfig();
+
 require('./bootstrap');
+require('./components/menu');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

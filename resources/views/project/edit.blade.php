@@ -1,10 +1,4 @@
-@extends('layouts.app')
 
-@section('title')
-Project Edit
-@endsection
-
-@section('content')
 <div class="container">
 	<div class="col-md-8">
 		<form role="form" action="{{ route('project.update', $project->id) }}" method="post" class="form-horizontal">
@@ -31,5 +25,3 @@ Project Edit
 		</form>
 	</div>
 </div>
-
-@endsection

@@ -13,9 +13,11 @@ class TaskController extends Controller
     public function index()
     {
         $user = \Auth::user();
+		//$project = DB::table('projects')->get();
+		$tasks = DB::table('tasks')->get();
 		// have to edit
-		$data['projects'] = Project::where('user_id','=', $user->id)->get();
-		$data['tasks'] = Task::where('project_id','=','4')->get();
+		$data['projects'] = Project::where('user_id', '=','4')->get();
+		$data['tasks'] = Task::where('project_id',$tasks->project_id)->get();
 		return view('project.task.index', $data, $tasks);
     }
 	public function create()

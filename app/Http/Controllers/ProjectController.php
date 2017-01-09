@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Project;
+use App\Http\Libraries\AjaxResponse;
 
 class ProjectController extends Controller
 {
@@ -15,11 +16,53 @@ class ProjectController extends Controller
     public function index()
     {
         $user = \Auth::user();
-		$data['projects'] = Project::where('user_id', $user->id)->get();
-		
-		return view('project.index', $data);
+        
+
+        $rsp = new AjaxResponse();
+        
+        $project = Project::where('user_id', $user->id)->get();
+
+        $data['html'] = \View::make('project.home')->with('project', $project)->render();
+
+        $rsp->success= 1;
+        $rsp->data = $data;
+
+        
+        
+        return $rsp->toArray();
+        // $rspr = $rsp->toArray();
+
+        //return data(compact('project', 'user'))
+
+		//return view('project', $data);
+    
     }
 
+    public function index2()
+    {
+        $user = \Auth::user();
+        
+
+        $rsp = new AjaxResponse();
+        
+        $project = Project::where('user_id', $user->id)->get();
+
+        $data['html'] = \View::make('project.index')->with('project', $project)->render();
+
+        $rsp->success= 1;
+        $rsp->data = $data;
+
+        
+        
+        return $rsp->toArray();
+        // $rspr = $rsp->toArray();
+
+        //return data(compact('project', 'user'))
+
+        //return view('project', $data);
+    
+    }
+   
     /**
      * Show the form for creating a new resource.
      *
@@ -27,7 +70,15 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('project.create');
+        $user = \Auth::user();
+        $rsp = new AjaxResponse();
+        $project = Project::where('user_id', $user->id)->get();
+        $data['html'] = \View::make('project.create')->with('project', $project)->render();
+
+        $rsp->success= 1;
+        $rsp->data = $data;
+
+        return $rsp->toArray();
     }
 
     /**
@@ -38,17 +89,28 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-		
-		$user = \Auth::user();
-		
-		$project = new Project();
-		$project->name = $request->name;
-		$project->description = $request->description;
-		$project->user()->associate($user->id);
-		$project->save();
-		
-		return redirect('/project')->with('message', $project->name." has been created");
+
+        $user = \Auth::user();
+        
+
+        $rsp = new AjaxResponse();
+        
+        $project = new Project();
+        $project->name = $request->name;
+        $project->description = $request->description;
+        $project->user()->associate($user->id);
+        $project->save();
+
+        $data['html'] = \View::make('project.index')->with('project', $project)->with('message', $project->name." has been created")->render();
+
+        $rsp->success= 1;
+        $rsp->data = $data;
+
+        
+        
+        return $rsp->toArray();
+
+        
     }
 
     /**
@@ -76,8 +138,19 @@ class ProjectController extends Controller
     {
         // 1. data조회
 		$data['project'] = Project::findOrFail($id);
+
+        // ajax
+        $rsp = new AjaxResponse();
+        
+        $data['html'] = \View::make('pEdit')->render();
+        
+        $rsp->success= 1;
+        $rsp->data = $data;
+        
+        return $rsp->toArray();
+
 		// 2. 화면로딩+data
-		return view('project.edit', $data);
+		//return view('project.edit', $data);
     }
 
     /**

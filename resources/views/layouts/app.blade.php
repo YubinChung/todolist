@@ -8,10 +8,15 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Laravel'){{-- config('app.name', 'Laravel') --}}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+   
+    <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css')}}" >
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{{ asset('/js/bootstrap.min.js')}}"></script>
+
 
     <!-- Scripts -->
     <script>
@@ -47,14 +52,15 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right" id="sidebar">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ url('/login') }}">Login</a></li>
                             <li><a href="{{ url('/register') }}">Register</a></li>
                         @else
-                            <li><a href="{{ route('task.index')}}">My Task</a></li>
-                            <li><a href="{{ route('project.index')}}">My Project</a></li>
+                            <li><a class="btn_task" href="{{ route('task.index')}}">My Task</a></li>
+                            
+                            
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -80,10 +86,41 @@
                 </div>
             </div>
         </nav>
+        
+        <div class="container">
 
-        @yield('content')
+
+
+            @yield('content')
+
+            @if (Auth::guest())
+
+            <p>로그인 하라규</p>
+
+            @else
+            <div class="col-sm-3">
+                <ul id="sidebar" class="nav nav-pills nav-stacked">
+                    <li role="presentation">
+                        <a data-link="{{ route('p') }}">Project List</a>
+                    </li>
+                    <li role="presentation">
+                        <a data-link="{{ route('c') }}">Project Create</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="screenPanel" class="t111">
+                <div class="col-sm-9">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Dashboard</div>
+                        <div class="panel-body">You are logged in!</div>
+                    </div>
+                </div>
+            </div>
+            @endif
+        </div>
+
+        
     </div>
-
     <!-- Scripts -->
     <script src="/js/app.js"></script>
 </body>
