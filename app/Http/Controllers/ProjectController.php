@@ -15,14 +15,14 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $user = \Auth::user();
-        
+        $data['user'] = \Auth::user();
+
 
         $rsp = new AjaxResponse();
-        
-        $project = Project::where('user_id', $user->id)->get();
 
-        $data['html'] = \View::make('project.home')->with('project', $project)->render();
+        $data['project'] = Project::where('user_id', $data['user']->id)->get();
+
+        $data['html'] = \View::make('project.home')->with($data['project'], $project)->render();
 
         $rsp->success= 1;
         $rsp->data = $data;
@@ -90,25 +90,26 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
 
-        $user = \Auth::user();
+        $data['user'] = \Auth::user();
         
 
-        $rsp = new AjaxResponse();
-        
-        $project = new Project();
-        $project->name = $request->name;
-        $project->description = $request->description;
-        $project->user()->associate($user->id);
-        $project->save();
+        //$rsp = new AjaxResponse();
 
-        $data['html'] = \View::make('project.index')->with('project', $project)->with('message', $project->name." has been created")->render();
+        $data['project'] = new Project();
+        $data['project']->name = $request->name;
+        $data['project']->description = $request->description;
+        $data['project']->user()->associate($data['user']->id);
+        $data['project']->save();
 
-        $rsp->success= 1;
-        $rsp->data = $data;
+        //$data['html'] = \View::make('project.index')->with('project', $project)->with('message', $project->name." has been created")->render();
+
+        //$rsp->success= 1;
+        // $rsp->data = $data;
 
         
         
-        return $rsp->toArray();
+        //return $rsp->toArray();
+        return view('project.index')->with('message', $data['project']->name." has been created.");
 
         
     }

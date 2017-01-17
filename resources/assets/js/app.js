@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-let util = require('./util/config')
+var util = require('./util/config')
 util.ajaxConfig();
 
 require('./bootstrap');

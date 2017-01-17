@@ -24,14 +24,14 @@
 
 				@foreach($project as $prj)
 				<tr>
-					<td>{{$no++}}</td>
+					<td>{{ $no++ }}</td>
 					<td><a href="{{--route('project.show', $prj->id) --}}">{{ $prj -> name }}</a></td>
 					<td>{{ $prj -> description }}</td>
 					<td>{{ $prj -> created_at }}</td>
 					<td><a data-link="{{--route('pEdit') --}}" class="btn btn-info">Edit</a><br>
 						<form rule="form" method="post" action="{{-- route('project.destroy', $prj->id )--}}" class="form-horizontal">
 							{{ method_field("DELETE") }}
-							{{csrf_field()}}
+							{{ csrf_field() }}
 							<button type="submit" class="btn btn-danger">Delete</button>
 						</form>
 					</td>
@@ -42,7 +42,6 @@
 	</div>
 </div>
 </div>
-<!-- Scripts -->
-    <script src="/js/app.js"></script>
+
 
 

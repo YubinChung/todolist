@@ -18,12 +18,15 @@
     <script src="{{ asset('/js/bootstrap.min.js')}}"></script>
 
 
+
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+    <!-- Scripts -->
+    <script src="/js/app.js"></script>
 </head>
 <body>
     <div id="app">
@@ -121,7 +124,6 @@
 
         
     </div>
-    <!-- Scripts -->
-    <script src="/js/app.js"></script>
+
 </body>
 </html>

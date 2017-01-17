@@ -1,11 +1,13 @@
 
 var menu = {
     loginForm: function(){
-		let url = $(this).attr('data-link');
+		var url = $(this).attr('data-link');
 		//console.log(url);
 		$.get(url, {}, function(response){
 			if(response.success == 1){
-				$('.screenPanel').html(response.data.html);
+
+				$('body').find('#screenPanel').html(response.data.html);
+
 			}
 		})
 		
@@ -13,7 +15,7 @@ var menu = {
     },
     bind: function(){
         $('#sidebar li a').click(menu.loginForm);
-        $('.btnajax').click(menu.loginForm);
+        $('#screenPanel a').click(menu.loginForm);
     }
 }
 

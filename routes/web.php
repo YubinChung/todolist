@@ -28,7 +28,11 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::resource('project', 'ProjectController');
 	//Route::get('/home', 'HomeController@index');
 	Route::get('/project', 'ProjectController@index2')->name('p');
-	Route::get('/project/create', 'ProjectController@create')->name('c');
+    Route::post('/home', 'ProjectController@store')->name('createpost');
+    Route::get('/project/create', 'ProjectController@create')->name('c');
+
+
+
 	//Route::post('/project', 'ProjectController@store')->name('s');
 	//Route::post('/project/create', 'ProjectController@edit')->name('pEdit');
 });

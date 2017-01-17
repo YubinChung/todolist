@@ -22,7 +22,7 @@
 	<div class="form-group">
 
 		<div>
-		<button type="submit" href="{{ route('project.store') }}" type="submit" class="btn btn-primary btnajax">Create</button>
+		<button class="btn btn-primary" data-link="{{ route('createpost') }}" type="submit">Create</button>
 
 		</div>
 	</div>
