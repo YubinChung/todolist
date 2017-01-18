@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Project;
 use App\Http\Libraries\AjaxResponse;
 
+
 class ProjectController extends Controller
 {
     /**
@@ -17,12 +18,12 @@ class ProjectController extends Controller
     {
         $data['user'] = \Auth::user();
 
-
         $rsp = new AjaxResponse();
 
         $data['project'] = Project::where('user_id', $data['user']->id)->get();
 
-        $data['html'] = \View::make('project.home')->with($data['project'], $project)->render();
+
+        $data['html'] = \View::make('project.home')->render();
 
         $rsp->success= 1;
         $rsp->data = $data;
@@ -45,21 +46,18 @@ class ProjectController extends Controller
 
         $rsp = new AjaxResponse();
         
-        $project = Project::where('user_id', $user->id)->get();
+        $data['project'] = Project::where('user_id', $user->id)->get();
 
-        $data['html'] = \View::make('project.index')->with('project', $project)->render();
+        $data['html'] = \View::make('project.index')->with('project', $data['project'])->render();
 
         $rsp->success= 1;
         $rsp->data = $data;
 
         
         
-        return $rsp->toArray();
-        // $rspr = $rsp->toArray();
+        return ['project' => Project::where('user_id', $user->id)->get(),
+            $rsp->toArray()];
 
-        //return data(compact('project', 'user'))
-
-        //return view('project', $data);
     
     }
    
@@ -91,27 +89,17 @@ class ProjectController extends Controller
     {
 
         $data['user'] = \Auth::user();
-        
-
-        //$rsp = new AjaxResponse();
 
         $data['project'] = new Project();
         $data['project']->name = $request->name;
         $data['project']->description = $request->description;
-        $data['project']->user()->associate($data['user']->id);
+        $data['project']->user()->associate( $data['user']->id);
         $data['project']->save();
 
-        //$data['html'] = \View::make('project.index')->with('project', $project)->with('message', $project->name." has been created")->render();
+        return view('project.home');
+        //return route('index2', $data);
+        //return Redirect::action('ProjectController@index');
 
-        //$rsp->success= 1;
-        // $rsp->data = $data;
-
-        
-        
-        //return $rsp->toArray();
-        return view('project.index')->with('message', $data['project']->name." has been created.");
-
-        
     }
 
     /**
@@ -125,7 +113,8 @@ class ProjectController extends Controller
         $data['project'] = Project::findOrFail($id);
 		
 		if($data['project'] == null) abort(404, $id." Model has not found");
-		
+
+
 		return view('project.show', $data);
     }
 
