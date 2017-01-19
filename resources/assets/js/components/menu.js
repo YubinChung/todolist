@@ -14,7 +14,7 @@ var menu = {
         
     },
     bind: function(){
-        $('#sidebar li a').click(menu.loginForm);
+        $('a.ajaxbtn').click(menu.loginForm);
         $('#screenPanel a').click(menu.loginForm);
     }
 }
