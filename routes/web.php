@@ -24,14 +24,17 @@ Auth::routes();
 //Route::get('/home', 'HomeController@index');
 // 위 라우트를 그룹으로 만들면 권한이 생긴다..
 
-Route::group(['middleware' => 'auth'], function($id){
+Route::group(['middleware' => 'auth'], function(){
 	Route::resource('project', 'ProjectController');
 	Route::get('/home', 'HomeController@index');
 	Route::get('/project', 'ProjectController@index')->name('p');
     Route::get('/project/create', 'ProjectController@create')->name('c');
     Route::post('/project/create', 'ProjectController@store')->name('store');
-
     Route::get('/project/{$id}/edit', 'ProjectController@edit')->name('edit');
+    Route::post('/project/{$id}/edit', 'ProjectController@update')->name('update');
+    //destroy
+    Route::post('/project/{$id}', 'ProjectController@destroy')->name('destroy');
+
 
 	//Route::post('/project', 'ProjectController@store')->name('s');
 	//Route::post('/project/create', 'ProjectController@edit')->name('pEdit');

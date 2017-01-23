@@ -21,7 +21,7 @@
 				<div><input type="text" class="form-control" id="updated_at" name="updated_at" value="{{old('updated_at')}}"></div>
 			</div>
 			<div>
-			<div>
+			    <div>
 				<button class="btn btn-primary" data-link="{{ route('store') }}" type="submit">Create</button>
 
 				</div>

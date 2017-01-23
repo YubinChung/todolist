@@ -19,13 +19,6 @@ class ProjectController extends Controller
         $data['user'] = \Auth::user();
         $data['project'] = Project::where('user_id', $data['user']->id)->get();
 
-//        $rsp = new AjaxResponse();
-//        $data['html'] = \View::make('project.index')->with('project', $project)->render();
-//
-//        $rsp->success= 1;
-//        $rsp->data = $data;
-//
-//        return $rsp->toArray();
         return view('project.index', $data);
     }
 
@@ -65,14 +58,7 @@ class ProjectController extends Controller
         $project->user()->associate( $data['user']->id);
         $project->save();
 
-//        $rsp = new AjaxResponse();
-//        $data['html'] = \View::make('project.index')->with('project', $project)->render();
-//
-//        $rsp->success= 1;
-//        $rsp->data = $data;
-//
-//        return $rsp->toArray();
-        return redirect('/project')->with('message', $project->name." has been changed");
+        return redirect('/project')->with('message', $project->name." has been created");
     }
 
     /**
@@ -99,12 +85,18 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        // 1. data조회
-		$data['project'] = Project::findOrFail($id);
+        $data['user'] = \Auth::user();
+        $rsp = new AjaxResponse();
+        $data['project'] = Project::findOrFail($id);
+        $data['html'] = \View::make('project.edit')->with('project', $data['project'])->render();
 
+        $rsp->success= 1;
+        $rsp->data = $data;
+
+        return $rsp->toArray();
 
 		// 2. 화면로딩+data
-		return view('project.edit', $data);
+		// return view('project.edit', $data);
     }
 
     /**
@@ -116,19 +108,19 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $project = Project::findOrFail($id);
+        $data['project'] = Project::findOrFail($id);
 		
 //		
 //		$project->update([
 //			'name' => $request->name,
 //			'description' => $request->description
 //		]);
-		
-		$project->name = $request->name;
-		$project->description = $request->description;
-		$project->save();
-		
-		return redirect('/project')->with('message', $project->name." has been changed");
+
+        $data['project'] ->name = $request->name;
+        $data['project'] ->description = $request->description;
+        $data['project'] ->save();
+
+        return redirect('/project')->with('message', $data['project']->name." has been updated");
     }
 
     /**
@@ -139,14 +131,14 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        $project = Project::findOrFail($id);
+        $data['project'] = Project::findOrFail($id);
 		
 		// 테이블 간 연결되어 있어서 모두 지워주도록
-		foreach($project->tasks as $task){
-			$task->delete();
+		foreach($data['project']->tasks as $data['task']){
+            $data['task']->delete();
 		}
-		$project->delete();
+        $data['project'] ->delete();
 		
-		return redirect('/project')->with('message', $project->name." has been deleted");
+		return redirect('/project')->with('message', $data['project']->name." has been deleted");
     }
 }

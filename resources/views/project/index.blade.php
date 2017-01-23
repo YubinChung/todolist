@@ -4,8 +4,8 @@
 	<div class="col-md-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h2>Project</h2>
-				<a data-link="{{ route('c') }}" class="ajaxbtn btn btn btn-default navbar-btn">Create</a>
+				<h2 class="title">Project</h2>
+				<a data-link="{{ route('c') }}" class="ajaxbtn btn btn btn-primary navbar-btn btn_create">Create</a>
 			</div>
 			<div class="panel-body">
 				<div id="screenPanel" class="t111">
@@ -16,7 +16,7 @@
 				<table class="table table-striped">
 					<thead>
 					<tr>
-						<td>No.</td>
+						<td>ID</td>
 						<td>Name</td>
 						<td>Description</td>
 						<td>Create</td>
@@ -24,19 +24,19 @@
 					</tr>
 					</thead>
 					<tbody>
-                    <?php $no=1; ?>
+
 
 					@foreach( $project as $prj)
 						<tr>
-							<td>{{ $no++ }}</td>
+							<td>{{ $prj -> id }}</td>
 							<td><a href="{{--route('project.show', $prj->id) --}}">{{ $prj -> name }}</a></td>
 							<td>{{ $prj -> description }}</td>
 							<td>{{ $prj -> created_at }}</td>
-							<td><a data-link="{{ route('edit') }}" class="btn btn-info">Edit</a><br>
-								<form rule="form" method="post" action="{{-- route('project.destroy', $prj->id )--}}" class="form-horizontal">
+							<td><a data-link="{{ route ('edit', $prj->id) }}" class="btn btn-info ajaxbtn btn-block"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
+								<form rule="form" method="post" action="{{ route('project.destroy', $prj->id )}}" class="form-horizontal">
 									{{ method_field("DELETE") }}
 									{{ csrf_field() }}
-									<button type="submit" class="btn btn-danger">Delete</button>
+									<button type="submit" class="btn btn-danger btn-block mt-1"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
 								</form>
 							</td>
 						</tr>
